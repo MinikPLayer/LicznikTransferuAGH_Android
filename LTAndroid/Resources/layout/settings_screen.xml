@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Opcje"
+        android:textSize="0.3in"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="76.0dp"/>
+
+    <TextView
+        android:gravity="center_vertical"
+        android:textSize="0.2in"
+        android:text="e-mail: "
+        android:paddingLeft="0.1in"
+        android:layout_width="match_parent"
+        android:layout_height="211.5dp"/>
+
+    <EditText
+        android:id="@+id/email_input"
+        android:inputType="textEmailAddress"
+        android:gravity="center"
+        android:layout_marginTop="0.52in"
+        android:layout_marginLeft="0.75in"
+        android:layout_width="252.5dp"
+        android:layout_height="51.5dp"/>
+
+    <TextView
+        android:gravity="center_vertical"
+        android:textSize="0.2in"
+        android:text="hasło: "
+        android:paddingLeft="0.1in"
+        android:layout_width="match_parent"
+        android:layout_height="327.7dp"/>
+
+    <EditText
+        android:id="@+id/password_input"
+        android:inputType="textPassword"
+        android:gravity="center"
+        android:layout_marginTop="0.9in"
+        android:layout_marginLeft="0.75in"
+        android:layout_width="252.5dp"
+        android:layout_height="51.5dp"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:text="Zapisz"
+        android:layout_width="match_parent"
+        android:layout_height="51.1dp"
+        android:layout_marginTop="1.3in"
+        android:layout_marginHorizontal="0.1in"/>
+
+</RelativeLayout>

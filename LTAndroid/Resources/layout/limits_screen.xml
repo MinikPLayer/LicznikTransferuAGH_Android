@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Limit pobierania"
+        android:textSize="0.2in"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:id="@+id/downloadProgressBar"
+        android:max="100"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="24.5dp"
+        android:paddingHorizontal="0.1in"/>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/downloadLimitText"
+        android:layout_width="match_parent"
+        android:layout_height="17.5dp"/>
+
+    <TextView
+        android:text="Limit wysyłania"
+        android:textSize="0.2in"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0.1in"/>
+
+    <ProgressBar
+        android:id="@+id/uploadProgressBar"
+        android:max="100"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="24.5dp"
+        android:paddingHorizontal="0.1in"/>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/uploadLimitText"
+        android:layout_width="match_parent"
+        android:layout_height="17.5dp"/>
+
+    <TextView
+        android:textSize="0.3in"
+        android:gravity="center"
+        android:id="@+id/costText"
+        android:layout_width="match_parent"
+        android:layout_height="68.0dp"/>
+
+    <ProgressBar
+        android:id="@+id/downloadingBar"
+        android:layout_width="match_parent"
+        android:layout_height="195.5dp"/>
+
+
+
+</LinearLayout>
