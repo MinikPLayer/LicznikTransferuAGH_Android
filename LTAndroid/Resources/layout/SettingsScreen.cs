@@ -20,9 +20,13 @@ namespace LTAndroid.Resources.layout
         Button saveButton;
         EditText emailField;
         EditText passwordField;
+        EditText serverIpField;
+        EditText serverPortField;
 
         public static string username = "";
         public static string password = "";
+        public static string serverIP = "minik.ml";
+        public static int serverPort = 7154;
 
         public static string errorDialog = "";
 
@@ -51,7 +55,8 @@ namespace LTAndroid.Resources.layout
             string data = "version: " + MainActivity.version;
             data += "\nusername: " + username;
             data += "\npassword: " + password;
-
+            data += "\nip: " + serverIP;
+            data += "\nport: " + serverPort;
 
 
             //File.WriteAllText(path, data);
@@ -108,6 +113,21 @@ namespace LTAndroid.Resources.layout
                 {
                     MainActivity.version = data[1];
                 }
+                else if(data[0] == "ip")
+                {
+                    serverIP = data[1];
+                }
+                else if(data[0] == "port")
+                {
+                    bool result = int.TryParse(data[1], out int port);
+                    if(!result)
+                    {
+                        errorDialog = "Blad przetwarzania pliku konfiguracji - niepoprawny port";
+                        MainActivity.singleton.ShowSettingsScreen();
+                        return;
+                    }
+                    serverPort = port;
+                }
                 else
                 {
                     //Log("Blad przetwarzania pliku konfiguracji - nie znaleziono tagu \"" + data[0] + "\"");
@@ -129,10 +149,14 @@ namespace LTAndroid.Resources.layout
             saveButton = view.FindViewById<Button>(Resource.Id.saveButton);
             emailField = view.FindViewById<EditText>(Resource.Id.email_input);
             passwordField = view.FindViewById<EditText>(Resource.Id.password_input);
+            serverIpField = view.FindViewById<EditText>(Resource.Id.serverip_input);
+            serverPortField = view.FindViewById<EditText>(Resource.Id.serverport_input);
             saveButton.Click += SaveButton_Click;
 
             emailField.Text = username;
             passwordField.Text = password;
+            serverIpField.Text = serverIP;
+            serverPortField.Text = serverPort.ToString();
 
             return view;
         }
@@ -147,6 +171,8 @@ namespace LTAndroid.Resources.layout
         {
             username = emailField.Text;
             password = passwordField.Text;
+            serverIP = serverIpField.Text;
+            serverPort = int.Parse(serverPortField.Text);
 
             SaveConfig();
             Console.WriteLine(username + ":" + password);

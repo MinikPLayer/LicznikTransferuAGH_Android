@@ -47,12 +47,46 @@
         android:layout_width="252.5dp"
         android:layout_height="51.5dp"/>
 
+    <TextView
+        android:gravity="center_vertical"
+        android:textSize="0.2in"
+        android:text="Server: "
+        android:paddingLeft="0.1in"
+        android:layout_width="match_parent"
+        android:layout_height="457.7dp"/>
+
+    <EditText
+        android:id="@+id/serverip_input"
+        android:inputType="text"
+        android:gravity="center"
+        android:layout_marginTop="1.4in"
+        android:layout_marginLeft="0.75in"
+        android:layout_width="252.5dp"
+        android:layout_height="51.5dp"/>
+
+    <TextView
+        android:gravity="center_vertical"
+        android:textSize="0.2in"
+        android:text="Port: "
+        android:paddingLeft="0.1in"
+        android:layout_width="match_parent"
+        android:layout_height="571.4dp"/>
+
+    <EditText
+        android:id="@+id/serverport_input"
+        android:inputType="numberSigned"
+        android:gravity="center"
+        android:layout_marginTop="1.75in"
+        android:layout_marginLeft="0.75in"
+        android:layout_width="252.5dp"
+        android:layout_height="51.5dp"/>
+
     <Button
         android:id="@+id/saveButton"
         android:text="Zapisz"
         android:layout_width="match_parent"
         android:layout_height="51.1dp"
-        android:layout_marginTop="1.3in"
+        android:layout_marginTop="2.3in"
         android:layout_marginHorizontal="0.1in"/>
 
 </RelativeLayout>

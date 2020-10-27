@@ -19,6 +19,7 @@ using Network.Packets;
 using System.Threading;
 using Android.Graphics;
 using System.IO;
+using Network.RSA;
 
 namespace LTAndroid.Resources.layout
 {
@@ -109,10 +110,24 @@ namespace LTAndroid.Resources.layout
         async Task UpdateLimits()
         {
 
-            ConnectionResult result = ConnectionResult.Timeout;
+            ConnectionResult result = ConnectionResult.TCPConnectionNotAlive;
 
-            TcpConnection connection = ConnectionFactory.CreateTcpConnection("minik.ml", 7154, out result);//ConnectionFactory.CreateTcpConnection("10.0.0.102", 7154, out result);
-            connection.ConnectionClosed += Connection_ConnectionClosed;
+            //var keys = RSAKeyGeneration.Generate(512);
+            //TcpConnection connection = ConnectionFactory.CreateSecureTcpConnection(SettingsScreen.serverIP, SettingsScreen.serverPort, keys, out result); //ConnectionFactory.CreateTcpConnection("minik.ml", 7154, out result);//ConnectionFactory.CreateTcpConnection("10.0.0.102", 7154, out result);
+            //var container = ConnectionFactory.CreateClientConnectionContainer(SettingsScreen.serverIP, SettingsScreen.serverPort);
+            //container.ConnectionEstablished += Container_ConnectionEstablished;
+            //container.ConnectionLost += Container_ConnectionLost;
+
+            //var connection = container.TcpConnection;
+            var res = await ConnectionFactory.CreateTcpConnectionAsync(SettingsScreen.serverIP, SettingsScreen.serverPort);
+            result = res.Item2;
+            var connection = res.Item1;
+            if(result != ConnectionResult.Connected)
+            {
+                MainActivity.singleton.ShowDialog("Błąd", "Błąd połączenia z serverem: " + result.ToString(), Context);
+                return;
+            }
+            //connection.ConnectionClosed += Connection_ConnectionClosed;
             Log(result);
             //SettingsScreen.username = "tomeckimichal01@gmail.com";
             //SettingsScreen.password = "Misiek200111";
@@ -126,6 +141,8 @@ namespace LTAndroid.Resources.layout
                 try
                 {
                     string r = System.Text.Encoding.UTF8.GetString(a.Data);
+                    if (r == "wait") return; // Wait, server is preparing
+                    if (r == "ok") return; // Server is ready, next message will be data
                     string[] limitsDt = r.Split(';');
 
                     if(limitsDt.Length == 2 && limitsDt[0] == "BL")
@@ -153,13 +170,16 @@ namespace LTAndroid.Resources.layout
 
             while (!done)
             {
+                Debug.Log("Waiting for the function to be done");
                 await Task.Delay(100);
             }
 
             DisplayLimits();
 
-            connection.ConnectionClosed -= Connection_ConnectionClosed;
+            //connection.ConnectionClosed -= Connection_ConnectionClosed;
         }
+
+
 
         async void DisplayLimits(int delay = 0)
         {
@@ -186,9 +206,14 @@ namespace LTAndroid.Resources.layout
         }
 
 
-        private void Connection_ConnectionClosed(Network.Enums.CloseReason arg1, Connection arg2)
+        private void Container_ConnectionLost(Connection arg1, Network.Enums.ConnectionType arg2, Network.Enums.CloseReason arg3)
         {
             Log("Connection lost");
+        }
+
+        private void Container_ConnectionEstablished(Connection arg1, Network.Enums.ConnectionType arg2)
+        {
+            Log("Connection established");
         }
 
         void UpdateCredentials(object sender, EventArgs e)
@@ -215,7 +240,7 @@ namespace LTAndroid.Resources.layout
                 dialog.SetMessage("Brak zapisanych informacji logowania, wpisz je na następnym ekranie");
                 dialog.SetTitle("Brak danych");
                 dialog.SetPositiveButton("OK", UpdateCredentials);
-                dialog.SetCancelable(true);
+                dialog.SetCancelable(false);
                 dialog.Create().Show();
                 //MainActivity.singleton.ShowSettingsScreen();
                 
